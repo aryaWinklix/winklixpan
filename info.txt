@@ -1,0 +1,6 @@
+harshhos_pantry_3674
+harshhos_pantry
+;kugyBm8W.x+
+
+
+'temp','pending','deleted','delivered','wishlist','received','inprocess','packed','shipped','rejected','dispatched','cancelled'

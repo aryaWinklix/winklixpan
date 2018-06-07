@@ -1,0 +1,335 @@
+{
+	"info": {
+		"_postman_id": "a6c9c8e3-c74f-4bf6-bee5-29fa60fa5d74",
+		"name": "pantry online",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get All Items",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://test.winklix.in/pantry/public/api/items/3",
+					"protocol": "http",
+					"host": [
+						"test",
+						"winklix",
+						"in"
+					],
+					"path": [
+						"pantry",
+						"public",
+						"api",
+						"items",
+						"3"
+					]
+				},
+				"description": "This is the get request to set list of all Items available by floor no. You need to pass floor no."
+			},
+			"response": []
+		},
+		{
+			"name": "get single items",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://test.winklix.in/pantry/public/api/items/dosa",
+					"protocol": "http",
+					"host": [
+						"test",
+						"winklix",
+						"in"
+					],
+					"path": [
+						"pantry",
+						"public",
+						"api",
+						"items",
+						"dosa"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get list of orders",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://test.winklix.in/pantry/public/api/orders/3",
+					"protocol": "http",
+					"host": [
+						"test",
+						"winklix",
+						"in"
+					],
+					"path": [
+						"pantry",
+						"public",
+						"api",
+						"orders",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "check authentication",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://test.winklix.in/pantry/public/api/checkAuth?email=admin@gmail.com&password=secret",
+					"protocol": "http",
+					"host": [
+						"test",
+						"winklix",
+						"in"
+					],
+					"path": [
+						"pantry",
+						"public",
+						"api",
+						"checkAuth"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "admin@gmail.com"
+						},
+						{
+							"key": "password",
+							"value": "secret"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get user details",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://test.winklix.in/pantry/public/api/getUserInfo/1",
+					"protocol": "http",
+					"host": [
+						"test",
+						"winklix",
+						"in"
+					],
+					"path": [
+						"pantry",
+						"public",
+						"api",
+						"getUserInfo",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all veg items",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://test.winklix.in/pantry/public/api/getItemsByCategory/veg/1",
+					"protocol": "http",
+					"host": [
+						"test",
+						"winklix",
+						"in"
+					],
+					"path": [
+						"pantry",
+						"public",
+						"api",
+						"getItemsByCategory",
+						"veg",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all non veg items",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://test.winklix.in/pantry/public/api/getItemsByCategory/1/nonveg",
+					"protocol": "http",
+					"host": [
+						"test",
+						"winklix",
+						"in"
+					],
+					"path": [
+						"pantry",
+						"public",
+						"api",
+						"getItemsByCategory",
+						"1",
+						"nonveg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Vendor Details",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://test.winklix.in/pantry/public/api/getVendorInfo/1",
+					"protocol": "http",
+					"host": [
+						"test",
+						"winklix",
+						"in"
+					],
+					"path": [
+						"pantry",
+						"public",
+						"api",
+						"getVendorInfo",
+						"1"
+					]
+				},
+				"description": "This is the get request to get details of vendor of the same floor. You have to pass floor no"
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Vendors List",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://test.winklix.in/pantry/public/api/getAllVendors",
+					"protocol": "http",
+					"host": [
+						"test",
+						"winklix",
+						"in"
+					],
+					"path": [
+						"pantry",
+						"public",
+						"api",
+						"getAllVendors"
+					]
+				},
+				"description": "This is the get request to get list of all vendors."
+			},
+			"response": []
+		},
+		{
+			"name": "Add To Cart",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://test.winklix.in/pantry/public/api/addToCart?user_id=1&item_id=1",
+					"protocol": "http",
+					"host": [
+						"test",
+						"winklix",
+						"in"
+					],
+					"path": [
+						"pantry",
+						"public",
+						"api",
+						"addToCart"
+					],
+					"query": [
+						{
+							"key": "user_id",
+							"value": "1"
+						},
+						{
+							"key": "item_id",
+							"value": "1"
+						}
+					]
+				},
+				"description": "This is the post request to add items in cart. You need to pass user_id and item_id. In return you will get a json response of success and failure"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Cart",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://test.winklix.in/pantry/public/api/getCart/7",
+					"protocol": "http",
+					"host": [
+						"test",
+						"winklix",
+						"in"
+					],
+					"path": [
+						"pantry",
+						"public",
+						"api",
+						"getCart",
+						"7"
+					]
+				},
+				"description": "This is the get request to see the cart of the current user. You need to pass user_id in the request. If someone's cart is empty ypu wil get an empty array"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Quantity",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://test.winklix.in/pantry/public/api/updateQuantity/1/1/10",
+					"protocol": "http",
+					"host": [
+						"test",
+						"winklix",
+						"in"
+					],
+					"path": [
+						"pantry",
+						"public",
+						"api",
+						"updateQuantity",
+						"1",
+						"1",
+						"10"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

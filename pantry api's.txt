@@ -1,0 +1,18 @@
+get All Items:  http://test.winklix.in/pantry/public/api/items  
+
+get Single Item Details/ Pass the {item_name_slug}: http://test.winklix.in/pantry/public/api/items/{item-name-slug}
+
+get All Veg Items/ Pass {category}=veg : http://test.winklix.in/pantry/public/api/getItemsByCategory/veg
+
+get All Non Veg Items/ Pass {category}=nonveg : http://test.winklix.in/pantry/public/api/getItemsByCategory/nonveg
+
+
+get List of Orders/ Pass {user ID} : http://test.winklix.in/pantry/public/api/orders/{user_id}
+
+post: chech Authentication/ pass email and password : http://test.winklix.in/pantry/public/api/checkAuth  : it will return true/false
+
+get user details/ Pass {user ID} : http://test.winklix.in/pantry/public/api/getUserInfo/{user_id}
+
+get Vendor Details/ Pass {floor_no} : http://test.winklix.in/pantry/public/api/getVendorInfo/{floor_no}
+
+get All Vendors List : http://test.winklix.in/pantry/public/api/getAllVendors
