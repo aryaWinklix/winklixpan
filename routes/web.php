@@ -35,6 +35,7 @@ Route::group( ['middleware' => ['auth']], function() {
     	'index' => 'roles.index'
     ]);
     // Route::resource('posts', 'PostController');
+    Route::get('feedbacks','FeedbackController@getFeedbacks')->name('feedbacks.getFeedbacks');
 });
 
 Route::resource('items','ItemController')->names([
