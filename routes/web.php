@@ -13,6 +13,8 @@
 
 Route::get('/', 'WelcomeController@welcome');
 
+Route::get('lab','WelcomeController@lab');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -20,9 +22,15 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group( ['middleware' => ['auth']], function() {
     Route::resource('users', 'UserController')->names([
     	'index' => 'users.index',
+        'create' => 'users.create',
+        'store' => 'users.store',
     	'edit' => 'users.edit',
-    	'destroy' => 'users.delete'
+        'update' => 'users.update',
+    	'destroy' => 'users.delete',
     ]);
+
+    Route::get('getUsersByType/{type}','UserController@getUsersByType')->name('users.getUsersByType');
+
     Route::resource('roles', 'RoleController')->names([
     	'index' => 'roles.index'
     ]);
@@ -39,6 +47,15 @@ Route::resource('items','ItemController')->names([
     'destroy' => 'items.delete',
 ]);
 
+// to update the price stock and minimal stock of item by vendor
+Route::post('itemsAttrUpdate','ItemController@itemsAttrUpdate')->name('items.itemsAttrUpdate');
+
+Route::get('addItemToMenu','ItemController@addItemToMenu')->name('items.addItemToMenu');
+
+Route::post('storeItemToMenu','ItemController@storeItemToMenu')->name('items.storeItemToMenu');
+
+//to update the status of an item in order
+Route::post('itemStatusUpdate','ItemController@itemStatusUpdate')->name('items.itemStatusUpdate');
 
 
 Route::resource('orders','OrderController')->names([
@@ -51,6 +68,17 @@ Route::resource('orders','OrderController')->names([
     'destroy' => 'orders.delete',
 ]);
 
+Route::get('updateOrderStatus/{order_id}/{item_id}/{status_id}','OrderController@updateOrderStatus');
+
+Route::get('updateQuantity/{order_id}/{item_id}/{quantity}','OrderController@updateQuantity');
+
+Route::get('getCart/{user_id}','OrderController@getCart');
+
+Route::get('getAddToCart','OrderController@getAddToCart')->name('getAddToCart');
+
+Route::post('addToCart','OrderController@addToCart')->name('addToCart');
+
+Route::get('addItemToCart/{user_id}/{item_id}','OrderController@addItemToCart');
 
 
 Route::post('/uploadCsv','ItemController@uploadCsv')->name('uploadCsv');
