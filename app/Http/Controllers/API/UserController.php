@@ -96,7 +96,7 @@ class UserController extends Controller
         $res = [
             'status' => 'success',
             'message' => 'Vendor Info is returned Successfully',
-            'userDetails' => User::where('type','vendor')->where('floor_no',$floor_no)->get(),
+            'vendorDetails' => User::where('type','vendor')->where('floor_no',$floor_no)->get(),
         ];
         return $res;
     }
