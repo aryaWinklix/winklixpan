@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Order;
 use App\Item;
+use App\User;
 
 class CartController extends Controller
 {
@@ -53,7 +54,7 @@ class CartController extends Controller
                                                                             'status' => 'temp']);
                     //update amount of order
                     // $order->amount = ($order->amount + $vendor->items()->where('item_id',$request->item_id)->first()->pivot->price);
-                    $order->amount = getAmountOfOrder($order->id);
+                    $order->amount = $this->getAmountOfOrder($order->id);
                     if ($order->update()) {
                         $res = [
                             'status' => 'success',
