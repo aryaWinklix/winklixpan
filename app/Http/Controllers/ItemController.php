@@ -5,12 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Item;
+use App\User;
+use App\Order;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 use App\Http\Middleware\CheckAdmin;
 
 use Maatwebsite\Excel\Facades\Excel;
+
+use Auth;
 
 class ItemController extends Controller
 {
@@ -21,7 +25,7 @@ class ItemController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(CheckAdmin::class)->except(['index', 'show']);
+        $this->middleware(CheckAdmin::class)->except(['index', 'show','itemsAttrUpdate','uploadCsv','addItemToMenu','storeItemToMenu','itemStatusUpdate']);
     }
     /**
      * Display a listing of the resource.
@@ -30,11 +34,12 @@ class ItemController extends Controller
      */
     public function index()
     {
-        // $myArr = array("John", "Mary", "Peter", "Sally");
-
-        // $post_data = json_encode(array('item' => Item::all()));
-        // return $post_data;
-        $items = Item::all();
+        if (Auth::user()->type === "admin") {
+            $items = Item::all();
+        }else{
+            $vendor = Auth::user();
+            $items = $vendor->items;
+        }
         return view('admin.item.index')->with('items',$items);
     }
 
@@ -146,6 +151,52 @@ class ItemController extends Controller
         }   
     }
 
+    public function itemsAttrUpdate(Request $request)
+    {
+        // return $request;
+        $vendor = Auth::user();
+        $vendor->items()->updateExistingPivot($request->item_id,[
+                                                        'price' => $request->price,
+                                                        'stock' => $request->stock,
+                                                        'minimal_stock' => $request->minimal_stock,
+                                                    ]);
+        session()->flash('message','Updated Successfully');
+        return redirect()->back();
+    }
+
+    public function addItemToMenu()
+    {
+        $vendor = Auth::user();
+        $items = Item::all();
+        return view('admin.item.addItemsToMenu')->with([
+                                                        'items' => Item::all(),
+                                                    ]);
+    }
+
+    public function storeItemToMenu(Request $request)
+    {
+        $vendor = Auth::user();
+        $vendor->items()->attach($request->item_id, [
+                                                'price' => $request->price,
+                                                'stock' => $request->stock,
+                                                'minimal_stock' => $request->minimal_stock,
+                                                ]);
+        session()->flash('message','Item added successfully in menu');
+        return redirect(route('items.index'));
+    }
+
+
+    public function itemStatusUpdate(Request $request)
+    {
+        $order = Order::findOrFail($request->order_id);
+        $order->items()->updateExistingPivot($request->item_id,[
+                                                                'quantity' => $request->quantity,
+                                                                'status' => $request->status,
+                                                            ]);
+        session()->flash('message','Item Status in Order updated successfully');
+        return redirect(route('orders.edit',$order->id));
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -154,6 +205,7 @@ class ItemController extends Controller
      */
     public function uploadCsv(Request $request)
     {
+        return "upload csv";
         // return array_map('str_getcsv', $request->file('import_file'));
         // return Excel::export();
 

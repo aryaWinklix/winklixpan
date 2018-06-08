@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Validator;
 use App\User;
 use App\Http\Resources\User\UserResource as UserResource;
+use App\Http\Resources\User\CheckAuthResource as CheckAuthResource;
 
 class UserController extends Controller
 {
@@ -21,20 +22,92 @@ class UserController extends Controller
         ]);
 
     	if ($validator->fails()) {
-            return "false";
+            // return "false";
+            $res = [
+                'status' => 'failed',
+                'message' => 'incorrect credentials'
+            ];
+            return $res;
         }else{
 			$credentials = $request->only('email', 'password');
 	        if (Auth::attempt($credentials)) {
-	            return "true";
+	            // return "true";
+                // return (new CheckAuthResource(User::where('email',$request->email)->get()))
+                //                 ->additional(['status' => 'success',
+                //                                 'message' => 'Login SuccessFully'
+                //                             ]);
+                $res = [
+                    'status' => 'success',
+                    'message' => 'Login SuccessFully',
+                    'userDetails' => User::where('email',$request->email)->get(),
+                ];
+                return $res;
 	        }else{
-	            return "false";
+	            // return "false";
+                $res = [
+                    'status' => 'failed',
+                    'message' => 'incorrect credentials'
+                ];
+                return $res;
 	        }
         }
     }
 
     public function getUserInfo($id)
     {
-        // return User::findOrFail($id)->toArray();
-    	return UserResource::collection(User::where('id',$id)->get());
+        // $user = User::findOrFail($id);
+        
+        // if ($id < 1) {
+        //     $status = [
+        //         'status' => 'failed',
+        //         'message' => 'Wrong User ID'
+        //     ];
+        // }else{
+        //     $user = User::findOrFail($id)->toJson();
+        //     if ($user == "") {
+        //         return $user->data;
+        //     }else{
+        //         $status = [
+        //             'status' => 'failed',
+        //             'message' => 'Wrong User ID'
+        //         ];  
+        //     }
+        //     // return User::findOrFail($id);
+        // }
+        // return json_encode(User::findOrFail($id));
+
+    	// return UserResource::collection(User::where('id',$id)->get());
+        $res = [
+            'status' => 'success',
+            'message' => 'User Info is returned SuccessFully',
+            'userDetails' => User::where('id',$id)->get(),
+        ];
+        return $res;
+    }
+
+    public function getVendorInfo($floor_no)
+    {
+        // return UserResource::collection(User::where('type','vendor')->where('floor_no',$floor_no)->get());
+
+        // return (new UserResource(User::where('type','vendor')->where('floor_no',$floor_no)->get()))
+        //                         ->additional(['status' => 'success',
+        //                                         'message' => 'Login SuccessFully'
+        //                                     ]);
+        $res = [
+            'status' => 'success',
+            'message' => 'Vendor Info is returned Successfully',
+            'userDetails' => User::where('type','vendor')->where('floor_no',$floor_no)->get(),
+        ];
+        return $res;
+    }
+
+    public function getAllVendors()
+    {
+        $res = [
+            'status' => 'success',
+            'message' => 'Vendors List is returned Successfully',
+            'vendorsDetails' => User::where('type','vendor')->get(),
+        ];
+        return $res;
     }
 }

@@ -5,7 +5,7 @@ namespace App\Http\Resources\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class UserResource extends JsonResource
+class UserResource extends ResourceCollection
 {
     /**
      * Transform the resource into an array.
@@ -27,11 +27,11 @@ class UserResource extends JsonResource
         ];
     }
 
-    public function with($request)
-    {
-        return [
-            'version' => '1.0',
-            'success' => true,
-        ];
-    }
+    // public function with($request)
+    // {
+    //     return [
+    //         'version' => '1.0',
+    //         'success' => true,
+    //     ];
+    // }
 }

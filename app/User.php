@@ -31,4 +31,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function orders()
+    {
+        return $this->hasMany('App\Order');
+    }
+
+    public function items()
+    {
+        return $this->belongsToMany('App\Item','item_vendor','vendor_id','item_id')->withPivot(['price','stock','minimal_stock']);
+    }
 }

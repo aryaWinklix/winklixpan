@@ -17,4 +17,19 @@ class Item extends Model
     {
     	return $this->belongsToMany('App\Order','item_order','order_id','item_id')->withPivot(['quantity','status']);
     }
+
+    public function getNameAttribute($value)
+    {
+        return strtolower($value);
+    }
+
+    // public function getIdAttribute($value)
+    // {
+    // 	return (string)$value;
+    // }
+
+    public function vendors()
+    {
+        return $this->belongsToMany('App\User','item_order','item_id','vendor_id')->withPivot(['price','stock','minimal_stock']);
+    }
 }
