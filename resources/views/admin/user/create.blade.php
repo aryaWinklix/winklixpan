@@ -1,6 +1,6 @@
 @extends('admin.admin')
 
-@section('title', 'Edit Users')
+@section('title', 'Add User')
 
 @section('content')
 
@@ -8,21 +8,20 @@
 
 <section class="content">
 	@include('errors_and_messages')
-	<h3>Edit Users</h3>
+	<h3>Add User</h3>
 	<hr>
-	<form action="{{ route('users.update',$user->id) }}" method="post" class="form">
+	<form action="{{ route('users.store') }}" method="post" class="form">
 		<div class="box-body">
 			<div class="row">
 				{{ csrf_field() }}
-				<input type="hidden" name="_method" value="PUT">
 				<div class="col-md-10">
 					<div class="form-group">
 						<label for="name">Name <span class="text-danger">*</span></label>
-						<input type="text" name="name" id="name" placeholder="Name" class="form-control" value="{{ $user->name }}">
+						<input type="text" name="name" id="name" placeholder="Name" class="form-control">
 					</div>
 					<div class="form-group">
 						<label for="email">Email <span class="text-danger">*</span></label>
-						<input type="text" name="email" id="email" placeholder="Email" class="form-control" value="{{ $user->email }}">
+						<input type="text" name="email" id="email" placeholder="Email" class="form-control">
 					</div>
 					<div class="form-group">
 						<label for="floor_no">Floor No <span class="text-danger">*</span></label>
@@ -46,14 +45,14 @@
 					</div>
 					<div class="form-group">
 						<label for="password">Password <span class="text-danger">*</span></label>
-						<input type="password" name="password" id="password" placeholder="Password" class="form-control" value="secret">
+						<input type="password" name="password" id="password" placeholder="Password" class="form-control" value="{{ old('password') }}">
 					</div>
 					<div class="form-group">
 						<label for="password-confirm">Confirm Password <span class="text-danger">*</span></label>
 						<input type="password" name="password_confirmation" id="password-confirm" placeholder="Confirm Password" class="form-control" required>
 					</div>
 					<div class="form-group">
-						<button class="btn btn-md btn-success">EDIT</button>
+						<button class="btn btn-md btn-success">ADD</button>
 					</div>
 				</div>
 			</div>
@@ -61,5 +60,5 @@
 	</form>
 
 </section>
-
+</div>
 @endsection

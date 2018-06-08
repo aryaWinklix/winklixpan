@@ -27,7 +27,7 @@
 						<label for="cover">Cover </label>
 						<input type="file" name="cover" id="cover" class="form-control">
 					</div>
-					<div class="form-group">
+				<!-- 	<div class="form-group">
 						<label for="quantity">Quantity <span class="text-danger">*</span></label>
 						<input type="text" name="quantity" id="quantity" placeholder="Quantity" class="form-control" value="{{ $item->quantity }}">
 					</div>
@@ -36,7 +36,7 @@
 						<div class="input-group">
 							<input type="text" name="price" id="price" placeholder="Price" class="form-control" value="{{ $item->price }}">
 						</div>
-					</div>
+					</div> -->
 					<div class="form-group">
 						<label for="calories">Calories </label>
 						<input class="form-control" value="{{ $item->calories}}" name="calories" id="calories"  placeholder="Calories">
