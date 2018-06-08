@@ -35,6 +35,8 @@ Route::namespace('API')->group(function (){
 
 	Route::get('getAllVendors','UserController@getAllVendors');
 	Route::get('getVendorInfo/{floor_no}','UserController@getVendorInfo');
+	
+	Route::post('addFeedback','FeedbackController@addFeedback');
 
 	// Route::get('updateQuantity/{user_id}/{item_id}/{count}','CartController@updateQuantity');
 
