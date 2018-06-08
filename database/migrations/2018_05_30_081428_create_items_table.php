@@ -19,9 +19,6 @@ class CreateItemsTable extends Migration
             $table->string('slug');
             $table->text('description')->nullable();
             $table->string('cover')->nullable();
-            $table->decimal('price');
-            $table->integer('quantity');
-            $table->integer('rating');
             $table->integer('calories');
             $table->timestamps();
         });

@@ -19,9 +19,6 @@ class ItemTableSeeder extends Seeder
 								tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
 								quis nostrud exercitation ullamco.',
 			'cover' => 'https://indianhealthyrecipes.com/wp-content/uploads/2016/03/dosa-recipe.jpg',
-			'price' => '20',
-			'quantity' => '7',
-			'rating' => '3.5',
 			'calories' => '120',
         ]);
         DB::table('items')->insert([
@@ -31,9 +28,6 @@ class ItemTableSeeder extends Seeder
 								tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
 								quis nostrud exercitation ullamco.',
 			'cover' => 'https://indianhealthyrecipes.com/wp-content/uploads/2016/03/dosa-recipe.jpg',
-			'price' => '15',
-			'quantity' => '10',
-			'rating' => '4.5',
 			'calories' => '110',
         ]);
         DB::table('items')->insert([
@@ -43,9 +37,6 @@ class ItemTableSeeder extends Seeder
 								tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
 								quis nostrud exercitation ullamco.',
 			'cover' => 'https://indianhealthyrecipes.com/wp-content/uploads/2016/03/dosa-recipe.jpg',
-			'price' => '20',
-			'quantity' => '7',
-			'rating' => '3.5',
 			'calories' => '120',
         ]);
         DB::table('items')->insert([
@@ -55,9 +46,6 @@ class ItemTableSeeder extends Seeder
 								tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
 								quis nostrud exercitation ullamco.',
 			'cover' => 'https://indianhealthyrecipes.com/wp-content/uploads/2016/03/dosa-recipe.jpg',
-			'price' => '20',
-			'quantity' => '7',
-			'rating' => '3.5',
 			'calories' => '295',
         ]);
         DB::table('items')->insert([
@@ -67,9 +55,6 @@ class ItemTableSeeder extends Seeder
 								tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
 								quis nostrud exercitation ullamco.',
 			'cover' => 'https://indianhealthyrecipes.com/wp-content/uploads/2016/03/dosa-recipe.jpg',
-			'price' => '80',
-			'quantity' => '15',
-			'rating' => '2.5',
 			'calories' => '266',
         ]);
         DB::table('items')->insert([
@@ -79,9 +64,6 @@ class ItemTableSeeder extends Seeder
 								tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
 								quis nostrud exercitation ullamco.',
 			'cover' => 'https://indianhealthyrecipes.com/wp-content/uploads/2016/03/dosa-recipe.jpg',
-			'price' => '5',
-			'quantity' => '50',
-			'rating' => '5',
 			'calories' => '20',
         ]);
     }
