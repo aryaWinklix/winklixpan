@@ -16,9 +16,9 @@ class CreateItemVendorTable extends Migration
         Schema::create('item_vendor', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('vendor_id')->unsigned();
-            $table->foreign('vendor_id')->references('id')->on('users');
+            $table->foreign('vendor_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('item_id')->unsigned();
-            $table->foreign('item_id')->references('id')->on('items');
+            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
             $table->decimal('price');
             $table->integer('stock');
             $table->integer('minimal_stock');
