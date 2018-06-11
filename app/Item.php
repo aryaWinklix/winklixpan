@@ -15,7 +15,7 @@ class Item extends Model
 
     public function orders()
     {
-    	return $this->belongsToMany('App\Order','item_order','order_id','item_id')->withPivot(['quantity','status']);
+    	return $this->belongsToMany('App\Order','item_order','order_id','item_id')->withPivot(['quantity','status','buying_price']);
     }
 
     public function getNameAttribute($value)
