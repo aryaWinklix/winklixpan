@@ -15,7 +15,7 @@ class Item extends Model
 
     public function orders()
     {
-    	return $this->belongsToMany('App\Order','item_order','order_id','item_id')->withPivot(['quantity','status','buying_price']);
+    	return $this->belongsToMany('App\Order','item_order','order_id','item_id')->withPivot(['quantity','status','buying_price'])->withTimestamps();
     }
 
     public function getNameAttribute($value)
@@ -30,6 +30,6 @@ class Item extends Model
 
     public function vendors()
     {
-        return $this->belongsToMany('App\User','item_order','item_id','vendor_id')->withPivot(['price','stock','minimal_stock']);
+        return $this->belongsToMany('App\User','item_order','item_id','vendor_id')->withPivot(['price','stock','minimal_stock'])->withTimestamps();
     }
 }

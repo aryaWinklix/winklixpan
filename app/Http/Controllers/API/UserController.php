@@ -110,4 +110,42 @@ class UserController extends Controller
         ];
         return $res;
     }
+
+    public function updateUserInfo(Request $request)
+    {
+        // return $request;
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required',
+            'name' => 'string',
+            'email' => 'email',
+            'floor_no' => 'string'
+        ]);
+
+        if ($validator->fails()) {
+            // return "false";
+            $res = [
+                'status' => 'failed',
+                'message' => 'Error on Validating'
+            ];
+            return $res;
+        }else{
+            $user = User::findOrFail($request->user_id);
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->floor_no = $request->floor_no;
+            if ($user->update()) {
+                $res = [
+                    'status' => 'success',
+                    'message' => 'User Info Updated Successfully',
+                ];
+                return $res;
+            }else{
+                $res = [
+                    'status' => 'error',
+                    'message' => 'Error! updation failed',
+                ];
+                return $res;
+            }
+        }
+    }
 }

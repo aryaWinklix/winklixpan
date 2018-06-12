@@ -31,8 +31,10 @@ class OrderController extends Controller
         }else{
             $users_ids = User::where('floor_no',Auth::user()->floor_no)->get(['id']);
             // $orders = Order::where('user_id',Auth::user()->id)->get();
-            $orders = Order::find($users_ids);
+            // $orders = Order::find($users_ids->toArray());
+            $orders = Order::whereIn('user_id',$users_ids)->get();
         }
+        // return $orders;
         // $user = User::findOrFail(Auth::user()->id);
         // return $user->getRoleNames();
         // if ($user->getRoleNames()[] === "Vendor") {
@@ -69,12 +71,45 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+        // $order = new Order;
+        // $order->user_id = $request->user_id;
+        // $order->amount = $request->amount;
+        // $order->payment_id = $request->payment_id;
+
+        // if ($order->save()) {
+        //     session()->flash('message','Order Created Successfully');
+        //     return redirect()->back();
+        // }else {
+        //     session()->flash('error','failed');
+        //     return redirect()->back();
+        // }
+
+        $user = User::findOrFail($request->user_id);
+        $total =0;
+        $itemIdWithQuantity= array();
+        $vendor = User::where('type','vendor')->where('floor_no',$user->floor_no)->first();
+        $itemIdWithQuantity = array_combine($request->item_id,$request->quantity);
+         foreach ($itemIdWithQuantity as $key => $value) {
+            $price = $vendor->items()->where('item_id',$key)->first()->pivot->price;
+            $total+=$price*($value);
+         }
         $order = new Order;
         $order->user_id = $request->user_id;
-        $order->amount = $request->amount;
-        $order->payment_id = $request->payment_id;
+        $order->amount = $total;
+        $order->payment_id = "";
+        $order->status = "processed";
+        // $order = new Order;
+        // $order->user_id = $request->user_id;
+        // $order->amount = $request->amount;
+        // $order->payment_id = $request->payment_id;
 
         if ($order->save()) {
+            foreach ($itemIdWithQuantity as $key => $value) {
+                $order->items()->attach($key, ['quantity' => $value,
+                                                'status' => 'inprocess',
+                                                'buying_price' => $vendor->items()->where('item_id',$key)->first()->pivot->price
+                                            ]);
+            }
             session()->flash('message','Order Created Successfully');
             return redirect()->back();
         }else {
@@ -150,6 +185,19 @@ class OrderController extends Controller
             session()->flash('error','failed');
             return redirect(route('orders.index'));
         }
+    }
+
+    public function searchOrders($status)
+    {
+        if (Auth::user()->type === 'admin') {
+            $orders = Order::where('status',$status)->get();
+        }else{
+            $users_ids = User::where('floor_no',Auth::user()->floor_no)->get(['id']);
+            // $orders = Order::where('user_id',Auth::user()->id)->get();
+            // $orders = Order::find($users_ids)->where('status',$status);
+            $orders = Order::whereIn('user_id',$users_ids)->where('status',$status)->get();
+        }
+        return view('admin.orders.index')->with('orders',$orders);
     }
 
     public function updateOrderStatus($order_id,$item_id,$status_id)

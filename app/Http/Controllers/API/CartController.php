@@ -28,7 +28,8 @@ class CartController extends Controller
             // return $orderDoesntHaveItems;
             if ($orderDoesntHaveItems) {
                 $order->items()->attach($request->item_id, ['quantity' => $request->quantity,
-                                                            'status' => 'temp']);
+                                                            'status' => 'cart',
+                                                            'buying_price' => $vendor->items()->where('item_id',$request->item_id)->first()->pivot->price]);
                 //update amount of order
                 //get price
                 $order->amount = ($order->amount + $vendor->items()->where('item_id',$request->item_id)->first()->pivot->price);
@@ -51,7 +52,9 @@ class CartController extends Controller
                 if ($order->items()->where('item_id',$request->item_id)->first()) {
                     //update quantiy
                     $order->items()->updateExistingPivot($request->item_id, ['quantity' => $request->quantity,
-                                                                            'status' => 'temp']);
+                                                                            'status' => 'cart',
+                                                                            'buying_price' => $vendor->items()->where('item_id',$request->item_id)->first()->pivot->price
+                                                                        ]);
                     //update amount of order
                     // $order->amount = ($order->amount + $vendor->items()->where('item_id',$request->item_id)->first()->pivot->price);
                     $order->amount = $this->getAmountOfOrder($order->id);
@@ -73,7 +76,8 @@ class CartController extends Controller
                     // if not than add item_id and quantity
                     //add items
                     $order->items()->attach($request->item_id, ['quantity' => $request->quantity,
-                                                                'status' => 'temp']);
+                                                                'status' => 'cart',
+                                                            'buying_price' => $vendor->items()->where('item_id',$request->item_id)->first()->pivot->price]);
                     //update amount of order
 
                     $res = [
@@ -93,11 +97,14 @@ class CartController extends Controller
            
             $order = new Order;
             $order->user_id = $request->user_id;
-            $order->amount = $price;
+            $order->amount = ($price)*($request->quantity);
             $order->payment_id = "";
             $order->status = "cart";
             if ($order->save()) {
                 // return "true";
+                $order->items()->attach($request->item_id, ['quantity' => $request->quantity,
+                                                                'status' => 'cart',
+                                                            'buying_price' => $price]);
                 $res = [
                     'status' => 'success',
                     'message' => 'Cart created Successfully',
@@ -143,17 +150,33 @@ class CartController extends Controller
     public function updateQuantity($order_id,$item_id,$quantity)
     {
         $order = Order::findOrFail($order_id);
-        try{
-            $order->items()->updateExistingPivot($item_id,['quantity'=> $quantity]);
+        $user = User::findOrFail($order->user_id);
+        $vendor = User::where('type','vendor')->where('floor_no',$user->floor_no)->first();
+        $price = $vendor->items()->where('item_id',$item->id)->first()->pivot->price;
+        $order->amount = ($order->amount)*$quantity;
+        if ($order->update()) {
+            try{
+                $order->items()->updateExistingPivot($item_id,['quantity'=> $quantity]);
+                $res = [
+                    'status' => 'success',
+                    'message' => 'Quantity Updated Successfully',
+                ];
+                return $res;
+                // return "true";
+            }catch(Exception $e) {
+                $res = [
+                    'status' => 'Failed',
+                    'message' => 'Sorry! Some error Occcured',
+                ];
+                return $res;
+            }  
+        }else{
             $res = [
-                'status' => 'success',
-                'message' => 'Quantity Updated Successfully',
+                'status' => 'failed',
+                'message' => 'Problem in Updating the Order',
             ];
             return $res;
-            // return "true";
-        }catch(Exception $e) {
-            return 'Message: ' .$e->getMessage();
-        }   
+        }
     }
 
     public function getCart($user_id)
@@ -165,7 +188,7 @@ class CartController extends Controller
                 'status' => 'success',
                 'message' => 'Cart Returned Successfully',
                 'orderDetails' => $order,
-                'itemsInOrder' => $order->items()->get(),
+                'itemsInOrder' => $order->items()->get()->toArray(),
             ];
             return $res;
         }else {
@@ -191,5 +214,34 @@ class CartController extends Controller
     public function getAddToCart()
     {
         return view('admin.item.addToCart');
+    }
+
+
+    public function checkout($order_id)
+    {
+        $order = Order::withCount('items')->where('id',$order_id)->first();
+        $user = User::findOrFail($order->user_id);
+        $vendor = User::where('type','vendor')->where('floor_no',$user->floor_no)->first();
+        //payment module here
+
+        foreach ($order->items as $item) {
+            $order->items()->updateExistingPivot($item->id,[ 'status' => 'inprocess']);
+            $stock = $vendor->items()->where('item_id',$item->id)->first()->pivot->stock;
+            $vendor->items()->updateExistingPivot($item->id,[ 'stock' => ($stock - 1)]);
+        }
+        $order->status = 'processed';
+        if ($order->status) {
+            $res = [
+                'status' => 'success',
+                'message' => 'Checkout Success',
+            ];
+            return $res;
+        }else{
+            $res = [
+                'status' => 'failed',
+                'message' => 'Checkout Failed',
+            ];
+            return $res;
+        }
     }
 }

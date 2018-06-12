@@ -16,6 +16,7 @@ class ItemController extends Controller
     {
     	// return AllItemResource::collection(Item::all());
         $vendor = User::where('type','vendor')->where('floor_no',$floor_no)->first();
+        
         // return $vendor->items;
         $res = [
             'status' => 'success',
@@ -52,5 +53,24 @@ class ItemController extends Controller
         ];
         return $res;
     	// return Item::where('category',$cat)->get();
+    }
+
+    public function searchItem($name)
+    {
+        $items = Item::where('name','LIKE','%'.$name.'%')->get();
+        if ($items->count()) {
+            $res = [
+                'status' => 'success',
+                'message' => 'Searched Items Returns Successfully',
+                'itemsList' => $items,
+            ];
+            return $res;
+        }else{
+            $res = [
+                'status' => 'failed',
+                'message' => 'There is no item of that name',
+            ];
+            return $res;
+        }
     }
 }

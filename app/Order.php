@@ -14,7 +14,7 @@ class Order extends Model
 
     public function items()
     {
-    	return $this->belongsToMany('App\Item','item_order','order_id','item_id')->withPivot(['quantity','status','buying_price']);
+    	return $this->belongsToMany('App\Item','item_order','order_id','item_id')->withPivot(['quantity','status','buying_price'])->withTimestamps();
     }
 
     public function user()

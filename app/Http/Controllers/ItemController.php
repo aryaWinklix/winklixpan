@@ -25,7 +25,7 @@ class ItemController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(CheckAdmin::class)->except(['index', 'show','itemsAttrUpdate','uploadCsv','addItemToMenu','storeItemToMenu','itemStatusUpdate']);
+        $this->middleware(CheckAdmin::class)->except(['index', 'show','itemsAttrUpdate','uploadCsv','addItemToMenu','storeItemToMenu','itemStatusUpdate','removeItemFromMenu']);
     }
     /**
      * Display a listing of the resource.
@@ -176,24 +176,61 @@ class ItemController extends Controller
     public function storeItemToMenu(Request $request)
     {
         $vendor = Auth::user();
-        $vendor->items()->attach($request->item_id, [
-                                                'price' => $request->price,
-                                                'stock' => $request->stock,
-                                                'minimal_stock' => $request->minimal_stock,
-                                                ]);
-        session()->flash('message','Item added successfully in menu');
+        if ($vendor->items()->where('item_id',$request->item_id)->first()) {
+            session()->flash('error','Item already added in menu');
+        }else{
+            $vendor->items()->attach($request->item_id, [
+                                                    'price' => $request->price,
+                                                    'stock' => $request->stock,
+                                                    'minimal_stock' => $request->minimal_stock,
+                                                    ]);
+            session()->flash('message','Item added successfully in menu');
+        }
         return redirect(route('items.index'));
+    }
+
+    public function removeItemFromMenu(Request $request)
+    {
+        $vendor = Auth::user();
+        // $vendor->items()->detach($request->item_id);
+        if ($vendor->items()->detach($request->item_id)) {
+            session()->flash('message','Item removed from menu Successfully');
+        }else{
+            session()->flash('error','Error Occured');
+        }
+        return redirect()->back();
     }
 
 
     public function itemStatusUpdate(Request $request)
     {
-        $order = Order::findOrFail($request->order_id);
+        // $order = Order::findOrFail($request->order_id);
+        $order = Order::withCount('items')->where('id',$request->order_id)->first();
         $order->items()->updateExistingPivot($request->item_id,[
                                                                 'quantity' => $request->quantity,
                                                                 'status' => $request->status,
                                                             ]);
-        session()->flash('message','Item Status in Order updated successfully');
+        // $item_count = $order->items_count;
+        $i = 0;
+        // $order = Order::withCount('items')->where('id',3)->first();
+        // return $order->items_count;
+        foreach ($order->items as $item) {
+            $status = $order->items()->where('item_id',$item->id)->first()->pivot->status;
+            if ($status === 'delivered' || $status === 'rejected' || $status === 'cancelled') {
+                $i++;
+            }
+        }
+        // return $order->items_count;
+        if ($i === $order->items_count) {
+            $order->status = 'completed';
+        }else{
+            $order->status = 'processed';
+        }
+        if ($order->update()) {
+            session()->flash('message','Item Status in Order updated successfully');
+        }else{
+            session()->flash('error','Item Status in Order updated successfully but Order Status not updated successfully');
+        }
         return redirect(route('orders.edit',$order->id));
     }
 

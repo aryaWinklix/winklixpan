@@ -44,42 +44,42 @@ class OrderController extends Controller
     	// return Order::findOrFail(1)->items()->updateExistingPivot(1, ['status' => 5]);
     }
 
-    public function addToCart(Request $request)
-    {
-        // return $request;
+    // public function addToCart(Request $request)
+    // {
+    //     // return $request;
 
-        $order = Order::where('user_id',$request->user_id)->where('status','cart')->first();
-        if ($order) {
-            $order->items()->attach($request->item_id, ['quantity' => 1,
-                                                    'status' => 'temp']);
-            $res = [
-                'status' => 'success',
-                'message' => 'Item added Successfully',
-            ];
-            return $res;
-        }else {
-            // return "false";
-            $order = new Order;
-            $order->user_id = $request->user_id;
-            $order->amount = Item::where('id',$request->item_id)->get('price');
-            $order->payment_id = "";
-            $order->status = "cart";
-            if ($order->save()) {
-                // return "true";
-                $res = [
-                    'status' => 'success',
-                    'message' => 'Cart created Successfully',
-                    'cartDetails' => $order,
-                ];
-                return $res;
-            }else{
-                // return "false";
-                $res = [
-                    'status' => 'success',
-                    'message' => 'Cart Not Created',
-                ];
-                return $res;
-            }
-        }
+    //     $order = Order::where('user_id',$request->user_id)->where('status','cart')->first();
+    //     if ($order) {
+    //         $order->items()->attach($request->item_id, ['quantity' => 1,
+    //                                                 'status' => 'temp']);
+    //         $res = [
+    //             'status' => 'success',
+    //             'message' => 'Item added Successfully',
+    //         ];
+    //         return $res;
+    //     }else {
+    //         // return "false";
+    //         $order = new Order;
+    //         $order->user_id = $request->user_id;
+    //         $order->amount = Item::where('id',$request->item_id)->get('price');
+    //         $order->payment_id = "";
+    //         $order->status = "cart";
+    //         if ($order->save()) {
+    //             // return "true";
+    //             $res = [
+    //                 'status' => 'success',
+    //                 'message' => 'Cart created Successfully',
+    //                 'cartDetails' => $order,
+    //             ];
+    //             return $res;
+    //         }else{
+    //             // return "false";
+    //             $res = [
+    //                 'status' => 'success',
+    //                 'message' => 'Cart Not Created',
+    //             ];
+    //             return $res;
+    //         }
+    //     }
     }
 }

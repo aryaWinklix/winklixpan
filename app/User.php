@@ -39,6 +39,7 @@ class User extends Authenticatable
 
     public function items()
     {
-        return $this->belongsToMany('App\Item','item_vendor','vendor_id','item_id')->withPivot(['price','stock','minimal_stock']);
+       
+        return $this->belongsToMany('App\Item','item_vendor','vendor_id','item_id')->withPivot(['price','stock','minimal_stock'])->withTimestamps();
     }
 }
