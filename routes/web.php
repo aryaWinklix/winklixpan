@@ -35,6 +35,7 @@ Route::group( ['middleware' => ['auth']], function() {
     	'index' => 'roles.index'
     ]);
     // Route::resource('posts', 'PostController');
+
     Route::get('feedbacks','FeedbackController@getFeedbacks')->name('feedbacks.getFeedbacks');
 });
 
@@ -50,11 +51,9 @@ Route::resource('items','ItemController')->names([
 
 // to update the price stock and minimal stock of item by vendor
 Route::post('itemsAttrUpdate','ItemController@itemsAttrUpdate')->name('items.itemsAttrUpdate');
-
 Route::get('addItemToMenu','ItemController@addItemToMenu')->name('items.addItemToMenu');
-
 Route::post('storeItemToMenu','ItemController@storeItemToMenu')->name('items.storeItemToMenu');
-
+Route::post('removeItemFromMenu','ItemController@removeItemFromMenu')->name('items.removeItemFromMenu');
 //to update the status of an item in order
 Route::post('itemStatusUpdate','ItemController@itemStatusUpdate')->name('items.itemStatusUpdate');
 
@@ -69,9 +68,11 @@ Route::resource('orders','OrderController')->names([
     'destroy' => 'orders.delete',
 ]);
 
+Route::get('searchOrders/{status}','OrderController@searchOrders')->name('orders.searchOrders');
 Route::get('updateOrderStatus/{order_id}/{item_id}/{status_id}','OrderController@updateOrderStatus');
-
 Route::get('updateQuantity/{order_id}/{item_id}/{quantity}','OrderController@updateQuantity');
+
+
 
 Route::get('getCart/{user_id}','OrderController@getCart');
 

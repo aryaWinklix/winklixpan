@@ -19,8 +19,9 @@ use Illuminate\Http\Request;
 
 Route::namespace('API')->group(function (){
 	Route::get('items/{floor_no}','ItemController@index');
-	Route::get('items/{slug}','ItemController@show');
+	Route::get('item/{slug}','ItemController@show');
 	Route::get('getItemsByCategory/{cat}/{floor_no}','ItemController@getItemsByCategory');
+	Route::get('searchItem/{name}','ItemController@searchItem');
 
 	Route::get('orders/{user_id}','OrderController@showPastOrders');
 	Route::get('cancelOrder/{order_id}/{item_id}','OrderController@changeOrderStatusToCancel');
@@ -29,13 +30,16 @@ Route::namespace('API')->group(function (){
 	Route::get('updateQuantity/{order_id}/{item_id}/{quantity}','CartController@updateQuantity');
 	Route::get('getCart/{user_id}','CartController@getCart');
 	Route::post('addToCart','CartController@addToCart');
+	Route::get('checkout/{order_id}','CartController@checkout');
+
 
 	Route::post('checkAuth','UserController@chackAuth');
 	Route::get('getUserInfo/{user_id}','UserController@getUserInfo');
+	Route::post('updateUserInfo','UserController@updateUserInfo');
 
 	Route::get('getAllVendors','UserController@getAllVendors');
 	Route::get('getVendorInfo/{floor_no}','UserController@getVendorInfo');
-	
+
 	Route::post('addFeedback','FeedbackController@addFeedback');
 
 	// Route::get('updateQuantity/{user_id}/{item_id}/{count}','CartController@updateQuantity');
