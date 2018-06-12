@@ -18,7 +18,7 @@
 				<div class="col-md-10">
 					<div class="form-group">
 						<label for="user_id">User Name <span class="text-danger">*</span></label>
-						<select class="custom-select" id="user_id">
+						<select class="custom-select" id="user_id" name="user_id">
 						    <option selected>Choose...</option>
 						    @foreach($users as $user)
 						    	<option value="{{ $user->id }}">{{ $user->name }}</option>
@@ -26,10 +26,11 @@
 						  </select>
 					</div>
 					<hr>
+				<div class="itemParent">
 					<div class="itembox">
 						<div class="form-group">
 							<label for="item_id">Item Name </label>
-							<select class="custom-select" name="item_id" id="item_id">
+							<select class="custom-select" name="item_id[]" id="item_id">
 							    <option selected>Choose...</option>
 							    @foreach($items as $item)
 							    	<option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -38,9 +39,10 @@
 						</div>
 						<div class="form-group">
 							<label for="quantity">Quantity </label>
-							<input class="form-control" value="{{ old('quantity')}}" name="quantity" id="quantity" rows="5" placeholder="quantity">
+							<input class="form-control" value="{{ old('quantity')}}" name="quantity[]" id="quantity" rows="5" placeholder="quantity">
 						</div>
 					</div>
+				</div>
 					<div class="appendhere">
 						
 					</div>
@@ -60,13 +62,10 @@
   	$('button#additem').on('click',function (e) {
   		e.preventDefault();
   		console.log('here');
-  		$('div.itembox').clone(true).appendTo('div.appendhere');
+  		$('div.itemParent > div.itembox').clone(true).appendTo('div.appendhere');
   	});
 
   });
 </script>
 
 @endsection
-
-
-

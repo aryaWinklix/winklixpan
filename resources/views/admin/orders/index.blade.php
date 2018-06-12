@@ -30,7 +30,11 @@
   <tbody>
     	@foreach($orders as $order)
         @if($order->status != 'cart')
-        <tr>
+          @if($order->status == 'completed')
+            <tr style="background-color:rgb(188, 245, 168);">
+          @else
+            <tr style="background-color:#f0a59f;">
+          @endif
         	<td>{{ $order->id }}</td>
         	<td>{{ $order->user->name }}</td>
         	<td>{{ $order->amount }}</td>

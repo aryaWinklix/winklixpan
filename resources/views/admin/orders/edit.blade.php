@@ -24,7 +24,7 @@
 					<div class="form-group">
 						<label for="amount">Amount <span class="text-danger">*</span></label>
 						<div class="input-group">
-							<input type="text" name="amount" id="amount" placeholder="Amount" class="form-control" value="{{ $order->amount }}">
+							<input type="text" name="amount" id="amount" placeholder="Amount" class="form-control" value="{{ $order->amount }}" disabled="true">
 						</div>
 					</div>
 					<div class="form-group">
@@ -35,9 +35,9 @@
 						<label for="status">Status </label>
 						<!-- <input class="form-control" value="{{ $order->status }}" name="status" id="status" rows="5" placeholder="status"> -->
 						<select class="custom-select" id="status" name="status">
-						    <option value="1">cart</option>
-						    <option value="2">processed</option>
-						    <option value="3">completed</option>
+						    <option value="cart" {{ 'cart' == $order->status ? 'selected="selected"' : '' }}>cart</option>
+						    <option value="processed" {{ 'processed' == $order->status ? 'selected="selected"' : '' }}>processed</option>
+						    <option value="completed" {{ 'completed' == $order->status ? 'selected="selected"' : '' }}>completed</option>
 						  </select>
 					</div>
 					<div class="form-group">
@@ -99,15 +99,11 @@
             <!-- <input type="text" class="form-control" id="status" name="status"> -->
             <select class="custom-select" id="status" name="status">
 			    	<option id="cart" value="cart">cart</option>
-			    	<option id="pending" value="pending">pending</option>
-			    	<option id="deleted" value="deleted">deleted</option>
-			    	<option id="delivered" value="delivered">delivered</option>
-			    	<option id="received" value="received">received</option>
 			    	<option id="inprocess" value="inprocess">inprocess</option>
 			    	<option id="packed" value="packed">packed</option>
 			    	<option id="shipped" value="shipped">shipped</option>
+			    	<option id="delivered" value="delivered">delivered</option>
 			    	<option id="rejected" value="rejected">rejected</option>
-			    	<option id="dispatched" value="dispatched">dispatched</option>
 			    	<option id="cancelled" value="cancelled">cancelled</option>
 			  </select>
           </div>

@@ -41,10 +41,10 @@
 						<label for="calories">Calories </label>
 						<input class="form-control" value="{{ $item->calories}}" name="calories" id="calories"  placeholder="Calories">
 					</div>
-					<div class="form-group">
+				<!-- 	<div class="form-group">
 						<label for="rating">Ratings </label>
 						<input class="form-control" value="{{ $item->rating }}" name="rating" id="rating" rows="5" placeholder="Rating">
-					</div>
+					</div> -->
 					<div class="form-group">
 						<button class="btn btn-md btn-success">Edit</button>
 					</div>

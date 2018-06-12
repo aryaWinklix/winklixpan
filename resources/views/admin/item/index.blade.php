@@ -24,6 +24,7 @@
         <th scope="col">Stock</th>
         <th scope="col">Minimal Stock</th>
         <th scope="col">Update</th>
+        <th scope="col">Remove</th>
       @endif
       @if(Auth::user()->type === 'admin')
         <th scope="col">Edit</th>
@@ -33,7 +34,13 @@
   </thead>
   <tbody>
     	@foreach($items as $item)
-      <tr>
+      @if(Auth::user()->type == 'vendor')
+        @if($item->pivot->minimal_stock < $item->pivot->stock)
+          <tr style="background-color:rgb(188, 245, 168);">
+        @else
+          <tr style="background-color:#f0a59f;">
+        @endif
+        @endif
       	<td>{{ $item->id }}</td>
       	<td>{{ $item->name }}</td>
       	<td>{{ str_limit($item->description,100) }}</td>
@@ -44,16 +51,23 @@
           <td>{{ $item->pivot->minimal_stock }}</td>
           <!-- <td><a href="{{ route('items.edit', $item->id) }}">update</a></td> -->
           <td>
-            <button type="button" class="btn btn-sm btn-primary show-model" data-toggle="modal" data-target="#exampleModal" data-id="{{ $item->id }}" data-price="{{ $item->pivot->price }}" data-stock="{{ $item->pivot->stock }}" data-minstock="{{ $item->pivot->minimal_stock }}">Update</button>
+            <button type="button" class="btn btn-sm btn-primary show-model" data-toggle="modal" data-target="#exampleModal" data-id="{{ $item->id }}" data-price="{{ $item->pivot->price }}" data-stock="{{ $item->pivot->stock }}" data-minstock="{{ $item->pivot->minimal_stock }}"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+          </td>
+          <td>
+            <form method="POST" action="{{ route('items.removeItemFromMenu') }}">
+              {{ csrf_field() }}
+              <input type="hidden" name="item_id" value="{{ $item->id }}">
+              <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button>
+            </form>
           </td>
         @endif
         @if(Auth::user()->type === 'admin')
-          <td><a href="{{ route('items.edit', $item->id) }}">edit</a></td>
+          <td><a href="{{ route('items.edit', $item->id) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
           <td>
             <form method="POST" action="{{ route('items.delete', $item->id) }}">
               {{ csrf_field() }}
               <input type="hidden" name="_method" value="DELETE">
-              <button type="submit" class="btn btn-sm btn-danger">delete</button>
+              <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button>
             </form>
           </td>
         @endif

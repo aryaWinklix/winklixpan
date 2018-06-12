@@ -19,6 +19,8 @@
             <li><a href="#">Orders Area</a></li>
                 <ul>
                     <li><a href="{{ route('orders.index') }}">All Orders</a></li>
+                    <li><a href="{{ route('orders.searchOrders','completed') }}">Completed Orders</a></li>
+                    <li><a href="{{ route('orders.searchOrders','processed') }}">Processed Orders</a></li>
                     @if(Auth::user()->type === 'vendor')
                         <li><a href="{{ route('orders.create') }}">Add Orders</a></li>
                     @endif
@@ -33,10 +35,10 @@
                     <li><a href="{{ route('users.create') }}">Add user</a></li>
                     <!-- <li><a href="{{ route('roles.index') }}">All roles</a></li> -->
                 </ul>
-            <li><a href="#">Manage Roles</a></li>
+            <!-- <li><a href="#">Manage Roles</a></li>
                 <ul>
                     <li><a href="{{ route('roles.index') }}">All roles</a></li>
-                </ul>
+                </ul> -->
             @endif
         </ul>
     </nav>
