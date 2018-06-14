@@ -9,7 +9,7 @@ class Item extends Model
     protected $table = "items";
 
     protected $fillable = [
-    	'name', 'slug', 'description', 'cover', 'price', 'quantity', 'rating', 'calories'
+    	'name', 'slug', 'description', 'cover', 'calories'
     ];
 
 
