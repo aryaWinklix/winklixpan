@@ -6,6 +6,8 @@ use App\Item;
 use App\User;
 use App\Order;
 
+use Carbon\Carbon;
+
 class OrderProductTableSeeder extends Seeder
 {
     /**
