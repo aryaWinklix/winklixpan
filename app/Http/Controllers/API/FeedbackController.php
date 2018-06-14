@@ -13,7 +13,7 @@ class FeedbackController extends Controller
     	//return $ABC = Feedback::where('id',7)->first();
             $feedback = new Feedback;
             $feedback->user_id = $request->user_id;
-            $feedback->selected_snacks = serialize($request->selected_snacks);
+            $feedback->selected_snacks = $request->selected_snacks;
             $feedback->how_often = $request->how_often;
             $feedback->comments = $request->comments;
             // $abc = unserialize($feedback->selected_snacks);
