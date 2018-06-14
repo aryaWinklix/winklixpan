@@ -49,6 +49,10 @@
                     <li><a href="{{ route('users.create') }}">Add user</a></li>
                     <!-- <li><a href="{{ route('roles.index') }}">All roles</a></li> -->
                 </ul>
+            <li><a href="#">Manage Feedbacks</a></li>
+                <ul>
+                    <li><a href="{{ route('feedbacks.getFeedbacks') }}">All feedbacks</a></li>
+                </ul> 
             <!-- <li><a href="#">Manage Roles</a></li>
                 <ul>
                     <li><a href="{{ route('roles.index') }}">All roles</a></li>
