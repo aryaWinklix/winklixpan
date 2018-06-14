@@ -12,8 +12,6 @@ use App\Role;
 use App\Permission;
 use App\Authorizable;
 
-use DB;
-
 use App\Order;
 use App\Item;
 

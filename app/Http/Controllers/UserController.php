@@ -92,7 +92,45 @@ class UserController extends Controller
 
 	public function update(Request $request, $id)
 	{
-		return $request;
+		// return $request;
+		  $this->validate($request, [
+	        'name' => 'bail|required|min:2',
+	        'email' => 'required|email|unique:users,email,' . $id,
+	        'floor_no' =>'required',
+	        'type' => 'required|min:1',
+	        'password' => 'required|string|min:6|confirmed',
+	    ]);
+
+	    // Get the user
+	    $user = User::findOrFail($id);
+	    $user->name = $request->name;
+	    $user->email = $request->email;
+	    $user->floor_no = $request->floor_no;
+	    $user->type = $request->type;
+
+
+	    // Update user
+	    // $user->fill($request->except('roles', 'permissions', 'password'));
+
+	    // check for password change
+	    if($request->get('password')) {
+	        $user->password = bcrypt($request->get('password'));
+	    }
+
+	    if ($user->update()) {	
+	    	session()->flash('message','User has been updated.');
+	    }else{
+
+	    	session()->flash('error','Error on Updating User Info');
+	    }
+
+	    // Handle the user roles
+	    // $this->syncPermissions($request, $user);
+
+	    // $user->save();
+	    // flash()->success('User has been updated.');
+	    return redirect()->route('users.index');
+
 	    // $this->validate($request, [
 	    //     'name' => 'bail|required|min:2',
 	    //     'email' => 'required|email|unique:users,email,' . $id,
