@@ -152,14 +152,20 @@ class CartController extends Controller
         $order = Order::findOrFail($order_id);
         $user = User::findOrFail($order->user_id);
         $vendor = User::where('type','vendor')->where('floor_no',$user->floor_no)->first();
-        $price = $vendor->items()->where('item_id',$item->id)->first()->pivot->price;
-        $order->amount = ($order->amount)*$quantity;
+        $price = $order->items()->where('item_id',$item_id)->first()->pivot->buying_price;
+        $oldQty = $order->items()->where('item_id',$item_id)->first()->pivot->quantity;
+        $order->amount = $order->amount - ($price*$oldQty);
+        $order->amount = $order->amount + ($price*$quantity);
         if ($order->update()) {
             try{
-                $order->items()->updateExistingPivot($item_id,['quantity'=> $quantity]);
+                $order->items()->updateExistingPivot($item_id,['quantity'=> $quantity,
+                                                                'buying_price' => $price,
+                                                            ]);
                 $res = [
                     'status' => 'success',
                     'message' => 'Quantity Updated Successfully',
+                    'orderDetails' => $order,
+                    'itemsInOrder' => $order->items()->get()->toArray(),
                 ];
                 return $res;
                 // return "true";
