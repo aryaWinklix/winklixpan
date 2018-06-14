@@ -26,21 +26,32 @@
 					</div>
 					<div class="form-group">
 						<label for="floor_no">Floor No <span class="text-danger">*</span></label>
-						<select class="custom-select" id="floor_no" name="floor_no">
+						<!-- <select class="custom-select" id="floor_no" name="floor_no">
 						    <option selected>Floor No</option>
 						    <option value="1">First</option>
 						    <option value="2">Second</option>
 						    <option value="3">Third</option>
+						  </select> -->
+						<select class="custom-select" id="floor_no" name="floor_no">
+						    <option value="1" {{ '1' == $user->floor_no ? 'selected="selected"' : '' }}>First</option>
+						    <option value="2" {{ '2' == $user->floor_no ? 'selected="selected"' : '' }}>Second</option>
+						    <option value="3" {{ '3' == $user->floor_no ? 'selected="selected"' : '' }}>Third</option>
 						  </select>
 					<!-- 	<input type="text" name="floor_no" id="floor_no" placeholder="Floor No" class="form-control" value="{{ old('floor_no') }}"> -->
 					</div>
 					<div class="form-group">
 						<label for="type">Role <span class="text-danger">*</span></label>
-						<select class="custom-select" id="type" name="type">
+					<!-- 	<select class="custom-select" id="type" name="type">
 						    <option selected>Role</option>
 						    <option value="vendor">Vendor</option>
 						    <option value="employee">Employee</option>
 						    <option value="client">Client</option>
+						  </select> -->
+						<select class="custom-select" id="type" name="type">
+						    <option value="admin" {{ 'admin' == $user->type ? 'selected="selected"' : '' }}>Admin</option>
+						    <option value="vendor" {{ 'vendor' == $user->type ? 'selected="selected"' : '' }}>Vendor</option>
+						    <option value="employee" {{ 'employee' == $user->type ? 'selected="selected"' : '' }}>Employee</option>
+						    <option value="client" {{ 'client' == $user->type ? 'selected="selected"' : '' }}>Client</option>
 						  </select>
 						<!-- <input type="text" name="type" id="type" placeholder="Role" class="form-control" value="{{ old('type') }}"> -->
 					</div>

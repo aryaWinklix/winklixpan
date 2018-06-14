@@ -26,7 +26,6 @@
 					<div class="form-group">
 						<label for="floor_no">Floor No <span class="text-danger">*</span></label>
 						<select class="custom-select" id="floor_no" name="floor_no">
-						    <option selected>Floor No</option>
 						    <option value="1">First</option>
 						    <option value="2">Second</option>
 						    <option value="3">Third</option>
@@ -36,7 +35,7 @@
 					<div class="form-group">
 						<label for="type">Role <span class="text-danger">*</span></label>
 						<select class="custom-select" id="type" name="type">
-						    <option selected>Role</option>
+						    <option value="admin">Admin</option>
 						    <option value="vendor">Vendor</option>
 						    <option value="employee">Employee</option>
 						    <option value="client">Client</option>
