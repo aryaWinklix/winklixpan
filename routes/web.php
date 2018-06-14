@@ -13,7 +13,7 @@
 
 Route::get('/', 'WelcomeController@welcome');
 
-Route::get('lab','WelcomeController@lab');
+Route::get('lab','WelcomeController@lab')->name('lab');
 
 Auth::routes();
 
@@ -56,6 +56,8 @@ Route::post('storeItemToMenu','ItemController@storeItemToMenu')->name('items.sto
 Route::post('removeItemFromMenu','ItemController@removeItemFromMenu')->name('items.removeItemFromMenu');
 //to update the status of an item in order
 Route::post('itemStatusUpdate','ItemController@itemStatusUpdate')->name('items.itemStatusUpdate');
+Route::get('downloadItemsCSV','ItemController@downloadItemsCSV')->name('items.downloadItemsCSV');
+Route::post('uploadItemsCSV','ItemController@uploadItemsCSV')->name('items.uploadItemsCSV');
 
 
 Route::resource('orders','OrderController')->names([
@@ -72,15 +74,20 @@ Route::get('searchOrders/{status}','OrderController@searchOrders')->name('orders
 Route::get('updateOrderStatus/{order_id}/{item_id}/{status_id}','OrderController@updateOrderStatus');
 Route::get('updateQuantity/{order_id}/{item_id}/{quantity}','OrderController@updateQuantity');
 
-
-
 Route::get('getCart/{user_id}','OrderController@getCart');
-
 Route::get('getAddToCart','OrderController@getAddToCart')->name('getAddToCart');
-
 Route::post('addToCart','OrderController@addToCart')->name('addToCart');
-
 Route::get('addItemToCart/{user_id}/{item_id}','OrderController@addItemToCart');
 
+Route::post('uploadCsv','ItemController@uploadCsv')->name('items.uploadCsv');
+Route::get('downloadCurrentInventry','ItemController@downloadCurrentInventry')->name('items.downloadCurrentInventry');
 
-Route::post('/uploadCsv','ItemController@uploadCsv')->name('uploadCsv');
+
+Route::get('getClosingStock','HomeController@getClosingStock')->name('items.getClosingStock');
+Route::get('exportClosingStockCSV','HomeController@exportClosingStockCSV')->name('items.exportClosingStockCSV');
+
+Route::get('getPurchaseReport/{subMonths?}','HomeController@getPurchaseReport')->name('items.getPurchaseReport');
+Route::get('exportPurchaseReportCSV','HomeController@exportPurchaseReportCSV')->name('items.exportPurchaseReportCSV');
+
+Route::get('getConsumptionReport/{subMonths?}','HomeController@getConsumptionReport')->name('items.getConsumptionReport');
+Route::get('exportConsumptionReportCSV','HomeController@exportConsumptionReportCSV')->name('items.exportConsumptionReportCSV');
