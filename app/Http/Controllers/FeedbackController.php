@@ -15,7 +15,7 @@ class FeedbackController extends Controller
     	$finalarray = array();
     	foreach ($items as $item) {
     		foreach ($feedbacks as $feedback) {
-    			if(in_array($item->id, unserialize($feedback->selected_snacks)))
+    			if(in_array($item->id, explode(',',$feedback->selected_snacks)))
     			{
     				$item_name =Item::where('id',$item->id)->first()->name;
     				// echo $item_name;
