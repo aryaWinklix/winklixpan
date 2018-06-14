@@ -9,11 +9,6 @@
 @include('errors_and_messages')
 	<h3>Add Item</h3>
 	<hr>
-<!-- 	<form action="{{ route('uploadCsv') }}" class="form-horizontal" method="post" enctype="multipart/form-data">
-		{{ csrf_field() }}
-		<input type="file" name="import_file" />
-		<button class="btn btn-primary">Import File</button>
-	</form> -->
 
 	<form action="{{ route('items.store') }}" method="post" class="form" enctype="multipart/form-data">
 		<div class="box-body">
@@ -47,12 +42,18 @@
 						<input class="form-control" value="{{ old('calories')}}" name="calories" id="calories"  placeholder="Calories">
 					</div>
 					<div class="form-group">
+						<label for="category">Category </label>
+						<input class="form-control" value="{{ old('category')}}" name="category" id="category"  placeholder="Category">
+					</div>
+					<div class="form-group">
 						<button class="btn btn-md btn-success">ADD</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</form>
+<hr>
+
 </section>
 </div>
 

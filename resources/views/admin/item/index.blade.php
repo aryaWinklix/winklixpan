@@ -76,6 +76,34 @@
   </tbody>
 </table>
 
+<hr>
+
+
+@if(Auth::user()->type === 'admin')
+<h3>Upload Items List Through CSV</h3>
+
+<hr>
+
+<form class="form" enctype="multipart/form-data" action="{{ route('items.uploadItemsCSV') }}" method="POST">
+  {{ csrf_field() }}
+  <input type="file" name="csv">
+  <button type="submit">Upload</button>
+</form>
+
+@endif
+
+@if(Auth::user()->type === 'vendor')
+
+<h3>Upload CSV</h3>
+<hr>
+<form class="form" enctype="multipart/form-data" action="{{ route('items.uploadCsv') }}" method="POST">
+  {{ csrf_field() }}
+  <input type="file" name="csv">
+  <button type="submit">Upload</button>
+</form>
+
+@endif
+
 </section>
 </div>
 

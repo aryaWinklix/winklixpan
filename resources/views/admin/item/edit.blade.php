@@ -39,7 +39,11 @@
 					</div> -->
 					<div class="form-group">
 						<label for="calories">Calories </label>
-						<input class="form-control" value="{{ $item->calories}}" name="calories" id="calories"  placeholder="Calories">
+						<input class="form-control" value="{{ $item->calories }}" name="calories" id="calories"  placeholder="Calories">
+					</div>
+					<div class="form-group">
+						<label for="category">Category </label>
+						<input class="form-control" value="{{ $item->category }}" name="category" id="category"  placeholder="Category">
 					</div>
 				<!-- 	<div class="form-group">
 						<label for="rating">Ratings </label>
